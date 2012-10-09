@@ -9,4 +9,4 @@ Original module Copyright (c) 1997-2009 Damian Conway.
 http://search.cpan.org/dist/Lingua-EN-Inflect/lib/Lingua/EN/Inflect.pm
 
 This adaptation of the module is made by Niko Salminen (http://nikosalminen.com) and
-distributed under the BSD licence.
+distributed under the simplified BSD licence.
