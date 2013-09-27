@@ -66,7 +66,12 @@ class IndefiniteArticle
 
 		# HANDLE CONSONANTS
 
+		#KJBJM - why are there 2 '^'s in this?,it breaks the digit recognition below
+		#so trying without
 		if(preg_match("/^[^aeiouy]/i", $word))                  return "a $word";
+		
+		#if(preg_match("/^[aeiouy]/i", $word))                  return "a $word";
+
 
     		# HANDLE SPECIAL VOWEL-FORMS
 
