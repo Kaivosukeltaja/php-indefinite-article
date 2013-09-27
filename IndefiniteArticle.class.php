@@ -47,6 +47,22 @@ class IndefiniteArticle
     		# HANDLE USER-DEFINED VARIANTS
 		// TODO
 
+		# HANDLE NUMBERS IN DIGIT FORM (1,2 …)
+		#These need to be checked early due to the methods used in some cases below
+
+		#any number starting with an '8' uses 'an'
+		if(preg_match("/^[8](\d+)?/", $word))					return "an $word";
+		
+		#numbers starting with a '1' are trickier, only use 'an'
+		#if there are 3, 6, 9, … digits after the 11 or 18
+		
+		#check if word starts with 11 or 18
+		if(preg_match("/^[1][1](\d+)?/", $word) || (preg_match("/^[1][8](\d+)?/", $word))) {
+
+			#first strip off any decimals and remove spaces or commas
+			#then if the number of digits modulus 3 is 2 we have a match
+			if(strlen(preg_replace(array("/\s/", "/,/", "/\.(\d+)?/"), '', $word))%3 == 2) return "an $word";
+		}
 
 		# HANDLE ORDINAL FORMS
 		if(preg_match("/^(".self::$A_ordinal_a.")/i", $word)) 		return "a $word";
@@ -66,6 +82,10 @@ class IndefiniteArticle
 
 		# HANDLE CONSONANTS
 
+		#KJBJM - the way this is written it will match any digit as well as non vowels
+		#But is necessary for later matching of some special cases.  Need to move digit
+		#recognition above this.
+		#rule is: case insensitive match any string that starts with a letter not in [aeiouy] 
 		if(preg_match("/^[^aeiouy]/i", $word))                  return "a $word";
 
     		# HANDLE SPECIAL VOWEL-FORMS
@@ -86,8 +106,9 @@ class IndefiniteArticle
 
 		# HANDLE y... (BEFORE CERTAIN CONSONANTS IMPLIES (UNNATURALIZED) "i.." SOUND)
 
-		if(preg_match("/^(".self::$A_y_cons.")/i", $word))		return "an $word";
-
+		if(preg_match("/^(".self::$A_y_cons.")/i", $word))	return "an $word";
+		
+		#DEFAULT CONDITION BELOW
 		# OTHERWISE, GUESS "a"
 		return "a $word";
 	}
