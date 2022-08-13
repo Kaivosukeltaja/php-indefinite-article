@@ -61,7 +61,7 @@ class IndefiniteArticle
 
 			#first strip off any decimals and remove spaces or commas
 			#then if the number of digits modulus 3 is 2 we have a match
-			if(strlen(preg_replace(array("/\s/", "/,/", "/\.(\d+)?/"), '', $word))%3 == 2) return "an $word";
+			if(strlen(preg_replace(array("/\s/", "/,/", "/\.(\d+)?/", "/[-_a-zA-Z]/"), '', $word))%3 == 2) return "an $word";
 		}
 
 		# HANDLE ORDINAL FORMS
